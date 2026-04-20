@@ -1,0 +1,90 @@
+/* 1. Custom Background & Font Family */
+body {
+    background-color: #f0faff; /* Very light sky blue */
+    background-image: linear-gradient(to bottom, #e0f2f1, #ffffff);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #2c3e50; /* Deep navy-grey font color */
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. Positioning for Hero Div */
+.hero {
+    background-color: #0077be; /* Ocean Blue */
+    color: white; /* Font color style */
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero a {
+    color: antiquewhite;
+}
+
+/* 3. Style for the Main Content Div */
+#main-content {
+    max-width: 900px;
+    margin: -50px auto 20px;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* 4. Formatting images and containers */
+img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.video-wrapper {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#media-block {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* Navigation Style */
+nav {
+    padding: 15px;
+    background: #ffffff;
+}
+
+nav a {
+    color: #0077be;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+}
+
+/* Styling for the Tableau Block */
+.tableau-container {
+    background-color: #ffffff;      /* Clean white background for the data */
+    border: 2px solid #0077be;      /* Maui ocean blue border */
+    border-radius: 12px;            /* Rounded corners for a modern look */
+    padding: 20px;
+    margin: 40px auto;              /* Centers the div and adds space above/below */
+    max-width: 1000px;              /* Keeps it from getting too wide on huge screens */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Adds a subtle "lifted" effect */
+    
+    /* Requirement: Font styles inside the container */
+    font-family: 'Trebuchet MS', sans-serif; 
+    color: #333333;
+    text-align: center;
+}
+
+/* Optional: Styling the heading specifically inside this div */
+.tableau-container h3 {
+    color: #0077be;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

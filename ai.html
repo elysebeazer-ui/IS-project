@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tic Tac Toe</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #f4f4f4;
+    }
+
+    h1 { 
+        margin-top: 20px;
+    }
+
+    .board {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        gap: 10px;
+        justify-content: center;
+        margin: 20px auto;
+    }
+
+    .cell {
+        width: 100px;
+        height: 100px;
+        background: white;
+        font-size: 2.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid #333;
+    }
+
+    .cell:hover {
+        background: #eaeaea;
+    }
+
+    .controls {
+        margin-top: 10px;
+    }
+
+    button {
+        padding: 10px 15px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+    .score {
+        margin-top: 15px;
+        font-size: 18px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Tic Tac Toe</h1>
+
+<div>
+    <p>Select your symbol:</p>
+    <button onclick="choosePlayer('X')">Play as X</button>
+    <button onclick="choosePlayer('O')">Play as O</button>
+</div>
+
+<div class="board" id="board"></div>
+
+<div class="controls">
+    <button onclick="resetGame()">Restart Round</button>
+</div>
+
+<div class="score">
+    <p>You: <span id="playerScore">0</span> | Computer: <span id="computerScore">0</span></p>
+    <p id="status"></p>
+</div>
+
+<script>
+let board = Array(9).fill("");
+let player = "";
+let computer = "";
+let currentTurn = "player";
+let gameActive = false;
+let playerScore = 0;
+let computerScore = 0;
+
+const boardEl = document.getElementById("board");
+const statusEl = document.getElementById("status");
+
+function createBoard() {
+    boardEl.innerHTML = "";
+    board.forEach((cell, index) => {
+        const div = document.createElement("div");
+        div.classList.add("cell");
+        div.innerText = cell;
+        div.addEventListener("click", () => makeMove(index));
+        boardEl.appendChild(div);
+    });
+}
+
+function choosePlayer(choice) {
+    player = choice;
+    computer = choice === "X" ? "O" : "X";
+    gameActive = true;
+    board = Array(9).fill("");
+    statusEl.innerText = "Game started!";
+    createBoard();
+
+    if (computer === "X") {
+        currentTurn = "computer";
+        computerMove();
+    } else {
+        currentTurn = "player";
+    }
+}
+
+function makeMove(index) {
+    if (!gameActive || board[index] !== "" || currentTurn !== "player") return;
+
+    board[index] = player;
+    createBoard();
+
+    if (checkWinner(player)) {
+        playerScore++;
+        updateScore();
+        statusEl.innerText = "You win!";
+        gameActive = false;
+        return;
+    }
+
+    if (board.every(cell => cell !== "")) {
+        statusEl.innerText = "It's a tie!";
+        gameActive = false;
+        return;
+    }
+
+    currentTurn = "computer";
+    setTimeout(computerMove, 500);
+}
+
+function computerMove() {
+    let emptyIndexes = board.map((val, i) => val === "" ? i : null).filter(v => v !== null);
+    let move = emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)];
+
+    board[move] = computer;
+    createBoard();
+
+    if (checkWinner(computer)) {
+        computerScore++;
+        updateScore();
+        statusEl.innerText = "Computer wins!";
+        gameActive = false;
+        return;
+    }
+
+    if (board.every(cell => cell !== "")) {
+        statusEl.innerText = "It's a tie!";
+        gameActive = false;
+        return;
+    }
+
+    currentTurn = "player";
+}
+
+function checkWinner(playerSymbol) {
+    const winPatterns = [
+        [0,1,2], [3,4,5], [6,7,8],
+        [0,3,6], [1,4,7], [2,5,8],
+        [0,4,8], [2,4,6]
+    ];
+
+    return winPatterns.some(pattern =>
+        pattern.every(index => board[index] === playerSymbol)
+    );
+}
+
+function updateScore() {
+    document.getElementById("playerScore").innerText = playerScore;
+    document.getElementById("computerScore").innerText = computerScore;
+}
+
+function resetGame() {
+    board = Array(9).fill("");
+    gameActive = true;
+    statusEl.innerText = "New round!";
+    createBoard();
+
+    if (computer === "X") {
+        currentTurn = "computer";
+        computerMove();
+    } else {
+        currentTurn = "player";
+    }
+}
+
+// Initialize empty board
+createBoard();
+</script>
+
+</body>
+</html>
